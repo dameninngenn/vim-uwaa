@@ -22,7 +22,7 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 0.1, for Vim 7.0
+" Version: 0.2, for Vim 7.0
 "=============================================================================
 
 command! -nargs=? Uwaa call s:display_uwaa(<q-args>)
@@ -33,19 +33,59 @@ function! s:display_uwaa(mode)"{{{
   
   let l:aa = [
     \[
-      \ " 　　　/＼＿＿_／ヽ  　ヽ",
-      \ "　　 ／       :::::＼　つ",
-      \ "　  |, ,--､   --、:::|　わ",
-      \ "　　| ､_(o),:_(o),:::|ぁぁ",
-      \ " 　 | 　　::<　 　 ::|あぁ",
-      \ "　　 ＼ /( [三] )ヽ:／ああ",
-      \ " 　　／｀-------―´＼ぁあ",
+      \ " 　　/＼＿＿_／ヽ  　ヽ ",
+    \],
+    \[
+      \ "　 ／       :::::＼　つ ",
+    \],
+    \[
+      \ "  |, ,--､   --、:::|　わ",
+    \],
+    \[
+      \ "　| ､_(o),:_(o),:::|ぁぁ",
+    \],
+    \[
+      \ "  | 　　::<　 　 ::|あぁ",
+    \],
+    \[
+      \ "　 ＼ /( [三] )ヽ:／ああ",
+    \],
+    \[
+      \ " 　／｀-------―´＼ぁあ",
+    \],
+    \[
+      \ "                        ",
+    \],
+    \[
+      \ "",
     \],
   \]
 
+  let l:obj_width = 25
+  let l:obj_height = 8
+  let l:repeat_x = winwidth(0)/l:obj_width
+  let l:repeat_y = winheight(0)/l:obj_height
+  let l:loop_num = 0
+
+  for l:line in l:aa
+    let l:tmp_line = ''
+    let l:repeat_num = 0
+    while l:repeat_num < l:repeat_x
+      let l:tmp_line = l:tmp_line . l:line[0]
+      let l:aa[l:loop_num] = l:tmp_line
+      let l:repeat_num += 1
+    endwhile
+    let l:loop_num += 1
+    unlet l:line
+  endfor
+
   redraw
-  echon join(l:aa[0], "\n")
-  echo repeat("\n", winheight(0)-len(aa[0]))
+  let l:repeat_num = 0
+  while l:repeat_num < l:repeat_y
+      echon join(l:aa, "\n")
+      let l:repeat_num += 1
+  endwhile
+  echo repeat("\n", winheight(0)-l:repeat_y*(l:obj_height+1))
 
   if l:mode == "very_short"
       sleep 1
