@@ -64,7 +64,7 @@ function! s:display_uwaa(mode)"{{{
   let l:obj_width = 25
   let l:obj_height = 8
   let l:repeat_x = winwidth(0)/l:obj_width
-  let l:repeat_y = winheight(0)/l:obj_height
+  let l:repeat_y = (winheight(0)+1)/l:obj_height
   let l:loop_num = 0
 
   for l:line in l:aa
@@ -85,7 +85,7 @@ function! s:display_uwaa(mode)"{{{
       echon join(l:aa, "\n")
       let l:repeat_num += 1
   endwhile
-  echo repeat("\n", winheight(0)-l:repeat_y*(l:obj_height+1))
+  echo repeat("\n", winheight(0)-l:repeat_y*(l:obj_height))
 
   if l:mode == "very_short"
       sleep 1
